@@ -39,7 +39,7 @@ const GetRecipeByName = async (name: string) => {
     const response = await api.get(
       `search.php?s=${encodeURIComponent(name)}`
     );
-    return response.data.meal[0]
+    return response.data.meals[0]
   } catch (error) {
     console.log("Error fetching Recipe Meal: ", error);
   }
