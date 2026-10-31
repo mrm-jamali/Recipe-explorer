@@ -3,7 +3,6 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import Nav from "@/components/Nav";
 import type { ReactNode } from "react";
-import Header from "@/components/Header";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,7 +23,7 @@ export default function RootLayout({
     >
       <body className={`${poppins.className} min-h-full flex flex-col`}>
           <Nav/>
-        <Header/>
+    
       
         {children}
         </body>

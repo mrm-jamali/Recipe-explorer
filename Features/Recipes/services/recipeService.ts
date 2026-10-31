@@ -1,29 +1,32 @@
 import api from "@/lib/axios";
-const getRecipeById = async (id: string) => {
+ export const getRecipeById = async (id: string) => {
   try {
     const response = await api.get(`lookup.php?i=${id}`);
-   return  response.data.meal?[0] : null;
+  
+   return response.data.meals?.[0] ?? null;
   } catch (error) {
     console.error("Error fetching recipe by ID:", error);
     throw error;
   }
 };
 
-const getCategoryList = async () => {
+export const getCategoryList = async () => {
   try {
     const response = await api.get("categories.php");
     return response.data.categories
   } catch (error) {
     console.log("Error fetching category list:", error);
+    throw error;
   }
 };
 
-const GetRecipeByCategory = async (category: string) => {
+export const GetRecipeByCategory = async (category: string) => {
   try {
     const response = await api.get(`filter.php?c=${category}`);
-    return response.data.meals
+    return response.data.meals ?? []
   } catch (error) {
     console.log("Error fetching recipes by category:", error);
+    throw error;
   }
 };
 
@@ -34,14 +37,16 @@ const GetRecipeByCategory = async (category: string) => {
 //     console.log("Error fetching latest meal:", error);
 //   }
 // };
-const GetRecipeByName = async (name: string) => {
+export const GetRecipeByName = async (name: string) => {
   try {
     const response = await api.get(
       `search.php?s=${encodeURIComponent(name)}`
     );
-    return response.data.meals[0]
+    return response.data.meals ?? []
   } catch (error) {
     console.log("Error fetching Recipe Meal: ", error);
+    throw error;
   }
 };
-export default {getRecipeById,getCategoryList,GetRecipeByCategory, GetRecipeByName }
+
+
