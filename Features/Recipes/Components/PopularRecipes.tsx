@@ -1,13 +1,14 @@
 
 
-import {GetRecipeByName } from "../services/recipeService";
 
 
-import type { Recipe } from "@/type/type";
-import RecipeCard from "./RecipeCard";
+
+
+
+import RecipeList from "./RecipeList";
 
 async function PopularRecipes() {
-    const data=(await GetRecipeByName("chicken")) as Recipe[] || [];
+
  return (
 <section className="w-full px-4 py-10 sm:px-6 lg:px-10">
   <div className="px-[70px]">
@@ -26,10 +27,9 @@ async function PopularRecipes() {
       </button>
     </div>
 
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {data.map((recipe) => (
-        <RecipeCard recipe={recipe} key={recipe.idMeal} />
-      ))}
+    <div >
+      <RecipeList />
+      
     </div>
   </div>
 </section>
