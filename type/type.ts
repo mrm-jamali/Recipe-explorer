@@ -10,3 +10,8 @@ export interface Recipe {
 export interface RecipeResponse {
   meals: Recipe[] | null;
 }
+
+export type Ingredient = {
+  ingredient: string;
+  measure: string;
+};

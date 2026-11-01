@@ -9,6 +9,6 @@ async function RecipeList() {
         <RecipeCard recipe={recipe} key={recipe.idMeal} />
       ))}
     </div>
-  );
+  ); 
 }
 export default RecipeList;
