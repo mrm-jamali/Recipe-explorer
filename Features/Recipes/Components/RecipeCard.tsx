@@ -1,5 +1,6 @@
 
 import type { Recipe } from "@/type/type";
+import { promises } from "dns";
 import { Heart, Clock, BarChart3, Star } from "lucide-react";
 import Link from "next/link";
 type RecipeCardProps = {
@@ -7,9 +8,11 @@ type RecipeCardProps = {
 };
 
 function RecipeCard({ recipe }: RecipeCardProps) {
+
+
   return (
     <div className="w-full max-w-[354px] overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-<Link href={`/recipe/${recipe.idMeal}`}>
+<Link href={`/Recipe/${recipe.idMeal}`}>
   <div className="relative h-52 w-full">
         <img
           src={recipe.strMealThumb}

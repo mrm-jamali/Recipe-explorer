@@ -1,9 +1,17 @@
 
 
-function page() {
+interface PropsParams {
+  params:Promise<{id:string}>
+}
+
+
+ async function Page({params}:PropsParams) {
+
+    const {id}=await params;
+  // const { id } = await params;
   return (
-    <div>page</div>
+    <div>{id}</div>
   )
 }
 
-export default page
+export default Page
