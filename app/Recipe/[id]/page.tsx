@@ -1,4 +1,5 @@
 import IngredientsList from "@/Features/Recipes/Components/IngredientsList";
+import Instructions from "@/Features/Recipes/Components/instructions";
 import { getRecipeById } from "@/Features/Recipes/services/recipeService";
 
 interface PropsParams {
@@ -11,6 +12,8 @@ async function Page({ params }: PropsParams) {
 if (!data) {
     return <div>Recipe not found!</div>;
   }
+
+  const instructions = data.strInstructions;
  
   const ingredientArray =Array.from({ length: 20 }, (_, index) => {
     const ingredient = data[`strIngredient${index + 1}`];
@@ -22,7 +25,7 @@ if (!data) {
   });
   const filteredIngredients=ingredientArray.filter(item=>item.ingredient?.trim() !== "")
 
-  // const { id } = await params;پ
+  
   
   return (
     <div className="flex gap-4 mt-8 ">
@@ -36,19 +39,46 @@ if (!data) {
        
       
       </div>
-      <div className="flex-1">
-        <div>
-          <p></p>
-          <p>توضیح</p>
-          <div></div>
-          <button>Save Recipe</button>
-          <button>Share</button>
-        </div>
-        <div>
-          <h3>Insructions</h3>
-          ....
-        </div>
-      </div>
+    <div className="flex-1 min-w-0">
+  {/* Recipe Information */}
+  <div className="mt-5">
+    <h2 className="mb-4 text-2xl font-bold sm:text-3xl">
+      {data.strMeal}
+    </h2>
+
+    <div className="mb-5 flex flex-wrap gap-3">
+      <span className="rounded-full bg-orange-100 px-4 py-2 text-sm font-medium text-orange-700">
+        {data.strCategory}
+      </span>
+
+      <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
+        {data.strArea} Cuisine
+      </span>
+    </div>
+
+    <div className="flex flex-wrap gap-3">
+      <button className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600">
+        Save Recipe
+      </button>
+
+      <button className="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-100">
+        Share
+      </button>
+    </div>
+  </div>
+
+  {/* Recipe Instructions */}
+  <Instructions />
+  <div className="mt-8">
+    <h3 className="mb-4 text-xl font-bold sm:text-2xl">
+      Instructions
+    </h3>
+
+    <p className="text-sm leading-8 text-gray-600 sm:text-base">
+      {data.strInstructions}
+    </p>
+  </div>
+</div>
     </div>
   );
 }
