@@ -15,3 +15,7 @@ export type Ingredient = {
   ingredient: string;
   measure: string;
 };
+export interface Instruction {
+  id: number;
+  step: string;
+}
