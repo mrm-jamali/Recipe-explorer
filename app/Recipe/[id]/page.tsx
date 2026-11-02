@@ -52,7 +52,7 @@ console.log("hhhh",instructionsItem)
         <img
           src={data.strMealThumb}
           alt={data.strMeal}
-          className="w-[400px] rounded-xl"
+          className="w-[460px] h-[370px] rounded-xl"
         />
 
         <IngredientsList filteredIngredients={filteredIngredients} />

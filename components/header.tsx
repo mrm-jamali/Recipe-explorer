@@ -1,5 +1,9 @@
+import RecipeSearch from "@/Features/Recipes/Components/RecipeSearch";
+import type { Recipe } from "@/type/type";
+import { GetRecipeByName } from "@/Features/Recipes/services/recipeService";
+async function Header() {
+ const recipes = ((await GetRecipeByName("chicken")) as Recipe[]) || [];
 
-function Header() {
   return (
     <header className="min-h-[480px] w-full bg-black bg-[url('/images/recipe-hero.jpg')] bg-cover bg-center bg-no-repeat px-4 py-10 sm:px-8 sm:py-14 lg:min-h-[600px] lg:px-12 lg:py-16">
       <div className="flex w-full max-w-2xl flex-col items-start gap-5 sm:gap-6">
@@ -20,7 +24,7 @@ function Header() {
           and find fresh inspiration for every breakfast, lunch, and dinner.
         </p>
 
-        <div className="flex w-full max-w-xl items-center gap-2 rounded-xl border border-white/20 bg-white p-1.5 focus-within:ring-2 focus-within:ring-green-400 sm:gap-3 sm:p-2">
+        {/* <div className="flex w-full max-w-xl items-center gap-2 rounded-xl border border-white/20 bg-white p-1.5 focus-within:ring-2 focus-within:ring-green-400 sm:gap-3 sm:p-2">
           <input
             type="text"
             placeholder="Search for a recipe..."
@@ -35,7 +39,8 @@ function Header() {
           >
             Search
           </button>
-        </div>
+        </div> */}
+        <RecipeSearch />
       </div>
     </header>
   );
