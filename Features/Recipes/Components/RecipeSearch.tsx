@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
+import { GetRecipeByName } from "../services/recipeService";
 
 function RecipeSearch() {
   const [search,setSearch]=useState("")
@@ -15,6 +16,19 @@ const timer = setTimeout(() => {
     };
 
   },[search])
+
+
+
+useEffect(()=>{
+if (!debouncedSearch.trim()) return;
+
+  const fetchRecipe=async ()=>{const data=await GetRecipeByName (debouncedSearch)
+  // return data
+  console.log(data)
+}
+fetchRecipe()
+},[debouncedSearch])
+
   return (
     <div>
          <input

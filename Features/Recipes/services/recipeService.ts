@@ -38,7 +38,7 @@ export const GetRecipeByCategory = async (category: string) => {
 //   }
 // };
 export const GetRecipeByName = async (name: string) => {
-  try {
+  try { 
     const response = await api.get(
       `search.php?s=${encodeURIComponent(name)}`
     );
