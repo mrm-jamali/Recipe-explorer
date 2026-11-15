@@ -4,8 +4,16 @@ import { useState,useEffect } from "react";
 import { GetRecipeByName } from "../services/recipeService";
 import RecipeSearchResults from "./RecipeSearchResults";
 
+
 import { useRecipeSearch } from "@/app/context/useRecipeSearch";
-function RecipeSearchContainer() {
+
+interface RecipeSearchContainerProps {
+  popularContent: React.ReactNode;
+}
+
+function RecipeSearchContainer({
+  popularContent,
+}: RecipeSearchContainerProps) {
    const {search}=useRecipeSearch()
   const [debouncedSearch, setDebouncedSearch] = useState("");
    const [result, setResult] = useState<Recipe[]>([]);
@@ -44,7 +52,11 @@ function RecipeSearchContainer() {
     <div>
      
 
-    <RecipeSearchResults result={result} />
+ {search.trim() ? (
+  <RecipeSearchResults result={result} />
+) : (
+   popularContent
+)}
     </div>
     
   );
