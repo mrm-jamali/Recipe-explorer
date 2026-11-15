@@ -1,22 +1,50 @@
 "use client"
 import type { Recipe } from "@/type/type";
-import { useState } from "react";
-import RecipeSearch from "./RecipeSearch";
+import { useState,useEffect } from "react";
+import { GetRecipeByName } from "../services/recipeService";
 import RecipeSearchResults from "./RecipeSearchResults";
-import Header from "@/components/Header";
-import PopularRecipes from "./PopularRecipes";
+
+import { useRecipeSearch } from "@/app/context/useRecipeSearch";
 function RecipeSearchContainer() {
+   const {search}=useRecipeSearch()
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+   const [result, setResult] = useState<Recipe[]>([]);
 
-
+  useEffect (()=>{
+  const timer = setTimeout(() => {
+        setDebouncedSearch(search);
+      }, 500);
+  
+      return () => {
+        clearTimeout(timer);
+      };
+  
+    },[search])
+  
+  
+  
+  useEffect(()=>{
+ if (!debouncedSearch.trim()) {
+  setResult([]);
+  return;
+}
+  
+    const fetchRecipe=async ()=>{const data=await GetRecipeByName (debouncedSearch)
+    // return data
+    // console.log(data)
+  setResult(data)
+  console.log(data)
+  
+  
+  
+  }
+  fetchRecipe()
+  },[debouncedSearch])
   return (
     <div>
      
 
-      {/* {result.length > 0 ? (
-        <RecipeSearchResults recipes={result} />
-      ) : (
-        <PopularRecipes />
-      )} */}
+    <RecipeSearchResults result={result} />
     </div>
     
   );

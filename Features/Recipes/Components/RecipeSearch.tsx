@@ -1,8 +1,9 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import { GetRecipeByName } from "../services/recipeService";
 import type { Recipe } from "@/type/type";
-import RecipeSearchResults from "./RecipeSearchResults";
+
+import { useRecipeSearch } from "@/app/context/useRecipeSearch";
 
 
 // interface RecipeSearchProps {
@@ -11,38 +12,12 @@ import RecipeSearchResults from "./RecipeSearchResults";
 // }
 
 function RecipeSearch() {
-  // const [search,setSearch]=useState("")
-  //  const [debouncedSearch, setDebouncedSearch] = useState("");
-  //  const [result, setResult] = useState<Recipe[]>([]);
-   
-
-  useEffect (()=>{
-const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-
-  },[search])
 
 
+ 
+   const {search,setSearch}=useRecipeSearch()
 
-useEffect(()=>{
-if (!debouncedSearch.trim()) return;
-
-  const fetchRecipe=async ()=>{const data=await GetRecipeByName (debouncedSearch)
-  // return data
-  // console.log(data)
-setResult(data)
-console.log(data)
-
-
-
-}
-fetchRecipe()
-},[debouncedSearch])
+  
 
   return (
     <div>
@@ -60,7 +35,7 @@ fetchRecipe()
           >
             Search
           </button>
-          <RecipeSearchResults result={result} />
+          {/* <RecipeSearchResults result={result} /> */}
     </div>
   )
 }
