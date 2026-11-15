@@ -7,7 +7,10 @@
 
 import RecipeList from "./RecipeList";
 
-async function PopularRecipes() {
+
+
+
+ function PopularRecipes() {
 
  return (
 <section className="w-full px-4 py-10 sm:px-6 lg:px-10">
@@ -28,7 +31,9 @@ async function PopularRecipes() {
     </div>
 
     <div >
+      
       <RecipeList />
+     
       
     </div>
   </div>

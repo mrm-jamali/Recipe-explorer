@@ -1,9 +1,16 @@
 import RecipeSearch from "@/Features/Recipes/Components/RecipeSearch";
-import type { Recipe } from "@/type/type";
-import { GetRecipeByName } from "@/Features/Recipes/services/recipeService";
-async function Header() {
- const recipes = ((await GetRecipeByName("chicken")) as Recipe[]) || [];
 
+
+
+
+
+
+
+function Header() {
+
+  
+
+  
   return (
     <header className="min-h-[480px] w-full bg-black bg-[url('/images/recipe-hero.jpg')] bg-cover bg-center bg-no-repeat px-4 py-10 sm:px-8 sm:py-14 lg:min-h-[600px] lg:px-12 lg:py-16">
       <div className="flex w-full max-w-2xl flex-col items-start gap-5 sm:gap-6">
@@ -14,7 +21,7 @@ async function Header() {
         </h3>
 
         <h1 className="max-w-full text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-          Find Your Next Favorite{" "}
+          Find Your Next Favorite
           <span className="text-green-400">Recipe</span>
         </h1>
 
@@ -40,7 +47,9 @@ async function Header() {
             Search
           </button>
         </div> */}
-        <RecipeSearch />
+  
+<RecipeSearch />
+  
       </div>
     </header>
   );

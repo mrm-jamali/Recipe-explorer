@@ -1,10 +1,20 @@
 "use client"
 import { useEffect, useState } from "react"
 import { GetRecipeByName } from "../services/recipeService";
+import type { Recipe } from "@/type/type";
+import RecipeSearchResults from "./RecipeSearchResults";
+
+
+// interface RecipeSearchProps {
+//   setResult: React.Dispatch<React.SetStateAction<Recipe[]>>;
+  
+// }
 
 function RecipeSearch() {
-  const [search,setSearch]=useState("")
-   const [debouncedSearch, setDebouncedSearch] = useState("");
+  // const [search,setSearch]=useState("")
+  //  const [debouncedSearch, setDebouncedSearch] = useState("");
+  //  const [result, setResult] = useState<Recipe[]>([]);
+   
 
   useEffect (()=>{
 const timer = setTimeout(() => {
@@ -24,7 +34,12 @@ if (!debouncedSearch.trim()) return;
 
   const fetchRecipe=async ()=>{const data=await GetRecipeByName (debouncedSearch)
   // return data
-  console.log(data)
+  // console.log(data)
+setResult(data)
+console.log(data)
+
+
+
 }
 fetchRecipe()
 },[debouncedSearch])
@@ -35,7 +50,7 @@ fetchRecipe()
             type="text" onChange={(e)=>{setSearch(e.target.value)}} value={search}
             placeholder="Search for a recipe..."
             aria-label="Search for a recipe"
-            className="min-w-0 flex-1 bg-transparent px-2 py-2 text-sm text-gray-900 outline-none placeholder:text-gray-500 sm:px-3"
+           className="w-full bg-white px-3 py-3 text-sm text-black outline-none placeholder:text-gray-500"
           />
 
           <button  
@@ -45,6 +60,7 @@ fetchRecipe()
           >
             Search
           </button>
+          <RecipeSearchResults result={result} />
     </div>
   )
 }
