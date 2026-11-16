@@ -1,6 +1,6 @@
 "use client";
 import type { Recipe } from "@/type/type";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import { GetRecipeByName } from "../services/recipeService";
 import RecipeSearchResults from "./RecipeSearchResults";
 
@@ -17,6 +17,8 @@ function RecipeSearchContainer({ popularContent }: RecipeSearchContainerProps) {
   const [result, setResult] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<string | null>(null);
+  const loadingRef = useRef<HTMLDivElement | null>(null);
+  const emptyRef=useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,16 +56,50 @@ useEffect(() => {
   };
 
   fetchRecipe();
-}, [debouncedSearch]);
+}, [debouncedSearch]); 
+
+useEffect(() => {
+  if (isLoading) {
+    loadingRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }
+}, [isLoading]);
+
+useEffect(() => {
+  if (!isLoading && search.trim() && result.length === 0 && !isError) {
+    emptyRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }
+}, [isLoading, search, result, isError]);
 
   return (
    <div>
   {isLoading ? (
-    <h2>Loading...</h2>
+   <div
+  ref={loadingRef}
+  className="flex min-h-[300px] w-full flex-col items-center justify-center gap-4"
+>
+  <div className="h-14 w-14 rounded-full border-[5px] border-gray-200 border-t-orange-500 animate-spin" />
+
+  <span className="text-base font-medium text-gray-600">
+    Loading recipes...
+  </span>
+</div>
   ) : isError ? (
     <h2>{isError}</h2>
   ) : search.trim() && result.length === 0 ? (
-    <h2>No recipes found!</h2>
+    <div
+  ref={emptyRef}
+  className="flex min-h-[300px] w-full items-center justify-center"
+>
+  <h2 className="text-xl font-semibold text-gray-600">
+    No recipes found!
+  </h2>
+</div>
   ) : search.trim() ? (
     <RecipeSearchResults result={result} />
   ) : (
