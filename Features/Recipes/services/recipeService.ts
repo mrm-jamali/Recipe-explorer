@@ -30,13 +30,7 @@ export const GetRecipeByCategory = async (category: string) => {
   }
 };
 
-// const GetLatestMeal = async () => {
-//   try {
-//     const response = await api.get("latest.php");
-//   } catch (error) {
-//     console.log("Error fetching latest meal:", error);
-//   }
-// };
+
 export const GetRecipeByName = async (name: string) => {
   try { 
     const response = await api.get(
