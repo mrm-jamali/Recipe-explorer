@@ -12,7 +12,7 @@ function Header() {
 
   
   return (
-    <header className="min-h-[480px] w-full bg-black bg-[url('/images/recipe-hero.jpg')] bg-cover bg-center bg-no-repeat px-4 py-10 sm:px-8 sm:py-14 lg:min-h-[600px] lg:px-12 lg:py-16">
+   <header className="min-h-[180px] w-full bg-black bg-[url('/images/recipe-hero.jpg')] bg-cover bg-[center_60%] bg-no-repeat px-4 py-6 sm:px-8 sm:py-8 lg:px-12 lg:py-10">
       <div className="flex w-full max-w-2xl flex-col items-start gap-5 sm:gap-6">
         <h3 className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-green-400 sm:gap-3 sm:text-sm sm:tracking-[0.2em]">
           <span>Discover</span>

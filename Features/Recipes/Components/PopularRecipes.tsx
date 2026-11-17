@@ -13,7 +13,7 @@ import RecipeList from "./RecipeList";
  function PopularRecipes() {
 
  return (
-<section className="w-full px-4 py-10 sm:px-6 lg:px-10">
+<section className="w-full px-1 py-10 sm:px-6 lg:px-10 ">
   <div className="px-[70px]">
     <h2 className="mb-6 text-2xl font-bold text-gray-900">
       Popular Recipes

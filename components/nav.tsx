@@ -5,7 +5,7 @@ import { IoSearch } from "react-icons/io5";
 
 function Nav() {
   return (
-    <nav className="w-full border-b border-gray-200 bg-gray-50 px-4 py-3 sm:px-6 lg:px-12">
+   <nav className="w-full border-b border-gray-200 bg-gray-50 px-4 py-2 sm:px-6 lg:px-12">
       <div className="flex w-full flex-wrap items-center justify-between gap-y-4">
 
         {/* Logo */}
