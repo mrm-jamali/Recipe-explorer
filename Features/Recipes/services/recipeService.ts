@@ -13,7 +13,9 @@ import api from "@/lib/axios";
 export const getCategoryList = async () => {
   try {
     const response = await api.get("categories.php");
-    return response.data.categories
+    console.log("list",response.data.categories)
+    return response.data.categories;
+    
   } catch (error) {
     console.log("Error fetching category list:", error);
     throw error;
@@ -23,6 +25,7 @@ export const getCategoryList = async () => {
 export const GetRecipeByCategory = async (category: string) => {
   try {
     const response = await api.get(`filter.php?c=${category}`);
+     console.log("foofd name",response.data.meals)
     return response.data.meals ?? []
   } catch (error) {
     console.log("Error fetching recipes by category:", error);

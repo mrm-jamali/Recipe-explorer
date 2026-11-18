@@ -26,3 +26,7 @@ export type Category = {
   strCategoryThumb: string;
   strCategoryDescription: string;
 };
+
+export type CategoryProps = {
+  selectedCategory: string;
+};

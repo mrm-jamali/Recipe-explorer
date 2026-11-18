@@ -7,10 +7,12 @@
 
 import RecipeList from "./RecipeList";
 
+import type {CategoryProps} from "@/type/type"
 
 
 
- function PopularRecipes() {
+
+ function PopularRecipes({ selectedCategory}:CategoryProps) {
 
  return (
 <section className="w-full px-1 py-10 sm:px-6 lg:px-10 ">
@@ -32,7 +34,7 @@ import RecipeList from "./RecipeList";
 
     <div >
       
-      <RecipeList />
+      <RecipeList selectedCategory={selectedCategory} />
      
       
     </div>
