@@ -1,4 +1,6 @@
 import api from "@/lib/axios";
+import type { Category } from "@/type/type";
+import type { Recipe } from "@/type/type";
  export const getRecipeById = async (id: string) => {
   try {
     const response = await api.get(`lookup.php?i=${id}`);
@@ -45,5 +47,39 @@ export const GetRecipeByName = async (name: string) => {
     throw error;
   }
 };
+
+
+// export const getAllRecipes = async (): Promise<Recipe[]> => {
+//   try {
+//     // 1. دریافت تمام دسته‌بندی‌ها
+//     const categories = await getCategoryList();
+
+//     // 2. دریافت غذاهای تمام دسته‌بندی‌ها
+//     const results = await Promise.all(
+//       categories.map((category: Category) =>
+//         GetRecipeByCategory(category.strCategory)
+//       )
+//     );
+
+//     // 3. ترکیب تمام لیست‌ها
+//     const allRecipes = results.flat();
+
+//     // 4. حذف غذاهای تکراری بر اساس idMeal
+//     const uniqueRecipes = Array.from(
+//       new Map(
+//         allRecipes.map((recipe: Recipe) => [
+//           recipe.idMeal,
+//           recipe,
+//         ])
+//       ).values()
+//     );
+
+//     return uniqueRecipes;
+
+//   } catch (error) {
+//     console.error("Error fetching all recipes:", error);
+//     throw error;
+//   }
+// };
 
 

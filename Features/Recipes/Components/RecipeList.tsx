@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { GetRecipeByCategory } from "../services/recipeService";
+import { GetRecipeByCategory, GetRecipeByName } from "../services/recipeService";
 import RecipeCard from "./RecipeCard";
 
 import type { Recipe } from "@/type/type";
 import type {CategoryProps} from "@/type/type"
+import IsError from "@/components/IsError";
 
 
 
@@ -14,9 +15,16 @@ function RecipeList({ selectedCategory}:CategoryProps) {
    const [isLoading,setIsLoading]=useState(false)
   // const data = ((await GetRecipeByCategory("")) as Recipe[]) || [];
   useEffect(() => {
-   
+   if ( selectedCategory==="All") {
+const fetchAllData=async ()=>{
+const allData=await GetRecipeByName("All")
+setRecipeType(allData)
+}
+fetchAllData()
 
-    const fetchRecipes= async () => {
+   }
+else {
+  const fetchRecipes= async () => {
       try {
 
          setIsLoading(true)
@@ -39,10 +47,13 @@ function RecipeList({ selectedCategory}:CategoryProps) {
    
     }
     fetchRecipes()
+ 
+}
+    
   }, [selectedCategory]);
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {isLoading ? <h2>its of</h2> : error ? <h2>eror</h2> : recipeType.map((recipe) => (
+      {isLoading ? <h2>Loading ...</h2> : error ? <IsError /> : recipeType.map((recipe) => (
         <RecipeCard recipe={recipe} key={recipe.idMeal} />
       ))}
     </div>

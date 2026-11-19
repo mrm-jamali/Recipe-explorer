@@ -46,7 +46,12 @@ throw error
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <button onClick={() => setSelectedCategory("All")} >All</button>
+          <button className={`rounded-full border px-6 py-3 text-sm font-medium shadow-sm transition-all duration-300 
+           ${
+    selectedCategory === "All"
+      ? "border-green-600 bg-green-600 text-white"
+      : "border-gray-200 bg-white text-gray-600 hover:border-green-500 hover:text-green-600"
+  }  `} onClick={() => setSelectedCategory("All")} >All</button>
           {  categories.map((category) => (
             <button
               key={category.idCategory}
