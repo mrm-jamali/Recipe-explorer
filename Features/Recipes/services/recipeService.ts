@@ -3,25 +3,43 @@ import type { Category } from "@/type/type";
 import type { Recipe } from "@/type/type";
  export const getRecipeById = async (id: string) => {
   try {
-    const response = await api.get(`lookup.php?i=${id}`);
-  
-   return response.data.meals?.[0] ?? null;
+  const response = await fetch(
+  `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
+  { cache: "no-store" }
+);
+
+const result = await response.json();
+
+return result.meals?.[0] ?? null;
   } catch (error) {
     console.error("Error fetching recipe by ID:", error);
     throw error;
   }
 };
 
+
+
 export const getCategoryList = async () => {
   try {
+    console.log("Base URL:", api.defaults.baseURL);
+
+    console.log(
+      "Final URL:",
+      new URL("categories.php", api.defaults.baseURL).href
+    );
+
     const response = await api.get("categories.php");
-    console.log("list",response.data.categories)
+
     return response.data.categories;
-    
-  } catch (error) {
-    console.log("Error fetching category list:", error);
-    throw error;
-  }
+  }catch (error) {
+  console.error("Error message:", error instanceof Error ? error.message : error);
+
+  console.error("Error stack:", error instanceof Error ? error.stack : "No stack");
+
+  console.error("Full error:", error);
+
+  throw error;
+}
 };
 
 export const GetRecipeByCategory = async (category: string) => {

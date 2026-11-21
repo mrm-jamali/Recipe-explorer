@@ -1,5 +1,5 @@
 import IngredientsList from "@/Features/Recipes/Components/IngredientsList";
-
+import { Suspense } from "react";
 import { getRecipeById } from "@/Features/Recipes/services/recipeService";
 import Instructions from "@/Features/Recipes/Components/Instructions";
 import type {Instruction} from "@/type/type"
@@ -7,7 +7,7 @@ interface PropsParams {
   params: Promise<{ id: string }>;
 }
 
-async function Page({ params }: PropsParams) {
+async function RecipeDetails({ params }: PropsParams) {
   const { id } = await params;
   const data = await getRecipeById(id);
   if (!data) {
@@ -102,4 +102,14 @@ console.log("hhhh",instructionsItem)
   );
 }
 
+function Page({ params }: PropsParams) {
+  return (
+    <Suspense fallback={<div>Loading recipe...</div>}>
+      <RecipeDetails params={params} />
+    </Suspense>
+  );
+}
+
 export default Page;
+
+
