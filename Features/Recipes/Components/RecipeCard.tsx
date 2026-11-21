@@ -17,7 +17,7 @@ function RecipeCard({ recipe }: RecipeCardProps) {
         <img
           src={recipe.strMealThumb}
           alt={recipe.strMeal}
-          className="h-full w-full object-cover" 
+          className="h-full w-full object-cover" loading="lazy"
         />
 
         <button
