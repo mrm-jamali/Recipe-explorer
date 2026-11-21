@@ -32,12 +32,12 @@ import type {CategoryProps} from "@/type/type"
       </button>
     </div>
 
-    <div >
+    
       
       <RecipeList selectedCategory={selectedCategory} />
      
       
-    </div>
+    
   </div>
 </section>
 );
