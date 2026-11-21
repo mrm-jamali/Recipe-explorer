@@ -1,124 +1,134 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { GetRecipeByCategory, GetRecipeByName } from "../services/recipeService";
-import RecipeCard from "./RecipeCard";
 
-import type { Recipe } from "@/type/type";
-import type {CategoryProps} from "@/type/type"
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import {
+  GetRecipeByCategory,
+  GetRecipeByName,
+} from "../services/recipeService";
+
+import RecipeCard from "./RecipeCard";
+import type { Recipe, CategoryProps } from "@/type/type";
 import IsError from "@/components/IsError";
 import Loading from "@/components/Loading";
 
-
-
-function RecipeList({ selectedCategory}:CategoryProps) {
+function RecipeList({ selectedCategory }: CategoryProps) {
   const [recipeType, setRecipeType] = useState<Recipe[]>([]);
   const [error, setError] = useState(false);
-   const [isLoading,setIsLoading]=useState(false)
-   const [visibleCount, setVisibleCount] = useState(8);
-   const statusRef=useRef<HTMLDivElement>(null)
-   const observerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(8);
 
-   
+  const statusRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<HTMLDivElement>(null);
 
- useEffect(() => {
-  if (!isLoading && !error) return;
-
-  const frame = requestAnimationFrame(() => {
-    statusRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  });
-
-  return () => cancelAnimationFrame(frame);
-}, [isLoading, error]);
+  // Scroll to Loading or Error status
   useEffect(() => {
-     setVisibleCount(8);
-   if ( selectedCategory==="All") {
-const fetchAllData=async ()=>{
-const allData=await GetRecipeByName("All")
-setRecipeType(allData)
-}
-fetchAllData()
+    if (!isLoading && !error) return;
 
-   }
-else {
-  const fetchRecipes= async () => {
+    const frame = requestAnimationFrame(() => {
+      statusRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [isLoading, error]);
+
+  // Fetch recipes when category changes
+  useEffect(() => {
+    let ignore = false;
+
+    const fetchRecipes = async () => {
+      setIsLoading(true);
+      setError(false);
+      setVisibleCount(8);
+
       try {
+        const data =
+          selectedCategory === "All"
+            ? await GetRecipeByName("All")
+            : await GetRecipeByCategory(selectedCategory);
 
-         setIsLoading(true)
-         setError(false);
-      const data = await GetRecipeByCategory(selectedCategory);
-      console.log("data",data)
-      setRecipeType(data);
-    }
-    catch(error) {
-      setError(true)
-     
+        if (!ignore) {
+          setRecipeType(data);
+        }
+      } catch {
+        if (!ignore) {
+          setError(true);
+          setRecipeType([]);
+        }
+      } finally {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      }
+    };
 
+    fetchRecipes();
 
-    
-
-    }
-    finally {
-      setIsLoading(false)
-    }
-   
-    }
-    fetchRecipes()
- 
-}
-    
+    return () => {
+      ignore = true;
+    };
   }, [selectedCategory]);
 
-
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-
-   
-
-      if (
-        entry.isIntersecting &&
-        visibleCount < recipeType.length
-      ) {
-        setVisibleCount((prev) =>
-          Math.min(prev + 8, recipeType.length)
-        );
-      }
-    },
-    {
-      threshold: 0.1,
+  // Infinite Scroll with Intersection Observer
+  useEffect(() => {
+    if (
+      isLoading ||
+      error ||
+      recipeType.length === 0 ||
+      visibleCount >= recipeType.length
+    ) {
+      return;
     }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) =>
+            Math.min(prev + 8, recipeType.length)
+          );
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    const currentElement = observerRef.current;
+
+    if (currentElement) {
+      observer.observe(currentElement);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isLoading, error, visibleCount, recipeType.length]);
+
+  return (
+    <div ref={statusRef}>
+      {isLoading ? (
+        <Loading />
+      ) : error ? (
+        <IsError />
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {recipeType.slice(0, visibleCount).map((recipe) => (
+            <RecipeCard
+              recipe={recipe}
+              key={recipe.idMeal}
+            />
+          ))}
+        </div>
+      )}
+
+      <div ref={observerRef} className="h-10" />
+    </div>
   );
+}
 
-  if (observerRef.current) {
-    observer.observe(observerRef.current);
-  }
-
-  return () => observer.disconnect();
-}, [visibleCount, recipeType.length]);
-
-
-
-return (
-  <div ref={statusRef}>
-    {isLoading ? (
-      <Loading />
-    ) : error ? (
-      <IsError />
-    ) : (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-     
-        {recipeType.slice(0, visibleCount).map((recipe) => (
-  <RecipeCard recipe={recipe} key={recipe.idMeal} />
-))}
-      </div>
-      
-    )}
-    <div ref={observerRef} className="h-10" />
-  </div>
-);
-}  
 export default RecipeList;
