@@ -4,7 +4,7 @@ import RecipeSearchContainer from "@/Features/Recipes/Components/RecipeSearchCon
 import PopularRecipes from "@/Features/Recipes/Components/PopularRecipes";
 import { RecipeSearchProvider } from "./context/RecipeSearchContext";
 import Categories from "@/Features/Recipes/Components/Categories";
-import type { Category } from "@/type/type";
+
 import { useState } from "react";
 
 
@@ -23,3 +23,6 @@ export default function Home() {
     </RecipeSearchProvider> 
   );
 }
+
+
+
