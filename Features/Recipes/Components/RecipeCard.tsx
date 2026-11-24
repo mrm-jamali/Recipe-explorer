@@ -1,6 +1,6 @@
 
 import type { Recipe } from "@/type/type";
-import { promises } from "dns";
+import { useFavariteStore } from "../store/FavariteStore";
 import { Heart, Clock, BarChart3, Star } from "lucide-react";
 import Link from "next/link";
 type RecipeCardProps = {
@@ -8,8 +8,10 @@ type RecipeCardProps = {
 };
 
 function RecipeCard({ recipe }: RecipeCardProps) {
-
-
+const addFavarite = useFavariteStore(
+  (state) => state.addFavarite
+);
+const removeFavarite=useFavariteStore((state)=>state.removeFavarite)
   return (
     <div className="w-full max-w-[354px] overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 <Link href={`/Recipe/${recipe.idMeal}`}>
@@ -20,7 +22,7 @@ function RecipeCard({ recipe }: RecipeCardProps) {
           className="h-full w-full object-cover" loading="lazy"
         />
 
-        <button
+        <button onClick={addFavarite()}
           type="button"
           aria-label="Add to favorites"
           className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition-colors hover:bg-red-50"
