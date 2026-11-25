@@ -12,6 +12,21 @@ const addFavarite = useFavariteStore(
   (state) => state.addFavarite
 );
 const removeFavarite=useFavariteStore((state)=>state.removeFavarite)
+const favarite=useFavariteStore((state)=>state.favarite)
+const isFavarite=favarite.includes(recipe.idMeal)
+
+
+const FavariteHandler=()=>{
+  if (isFavarite) {
+removeFavarite(recipe.idMeal)
+console.log("recipe.idMeal",recipe.idMeal)
+  }
+  else {
+addFavarite(recipe.idMeal)
+console.log("recipe.idMeal",recipe.idMeal)
+
+  }
+}
   return (
     <div className="w-full max-w-[354px] overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
 <Link href={`/Recipe/${recipe.idMeal}`}>
@@ -22,12 +37,21 @@ const removeFavarite=useFavariteStore((state)=>state.removeFavarite)
           className="h-full w-full object-cover" loading="lazy"
         />
 
-        <button onClick={addFavarite()}
+        <button  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    FavariteHandler();
+  }}
           type="button"
           aria-label="Add to favorites"
-          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition-colors hover:bg-red-50"
+          className={  ` absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md transition-colors hover:bg-red-50  ${isFavarite   ? "fill-red-500 text-red-500"
+      : "fill-transparent text-black" }    `}
         >
-          <Heart className="h-5 w-5 text-gray-600 hover:text-red-500" />
+          <Heart
+  size={20}
+  fill={isFavarite ? "red" : "none"}
+  stroke={isFavarite ? "red" : "gray"}
+/>
         </button>
       </div>
 </Link>
