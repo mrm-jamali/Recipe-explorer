@@ -1,20 +1,25 @@
 import { create } from "zustand"
+import type { FavariteRecipe } from "@/type/type"
 
 type FavariteState={
-favarite:string[],
-addFavarite:(id:string)=>void,
+favarite:FavariteRecipe[],
+
+addFavarite:(recipe:FavariteRecipe)=>void,
 removeFavarite:(id:string)=>void
 }
 export const useFavariteStore=create<FavariteState>((set)=>({
 
     favarite:[],
-addFavarite:(id)=>{set((state)=>({
-    favarite:[...state.favarite,id]
+addFavarite:({idMeal, strMeal, strMealThumb })=>{set((state)=>({
+    favarite:[...state.favarite,{idMeal, strMeal, strMealThumb }]
+
 })
+
+
 
 )},
 removeFavarite:(id)=>{set((state)=>({
-favarite:state.favarite.filter(item=>item!==id)
+favarite:state.favarite.filter(item=>item.idMeal!==id)
 }))
 
 }
@@ -23,3 +28,4 @@ favarite:state.favarite.filter(item=>item!==id)
 
 
 )
+

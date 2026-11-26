@@ -6,6 +6,11 @@ export interface Recipe {
   strCategory: string;
   strArea: string;
 }
+export type  FavariteRecipe  {
+   idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+}
 
 export interface RecipeResponse {
   meals: Recipe[] | null;

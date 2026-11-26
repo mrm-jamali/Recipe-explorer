@@ -24,6 +24,9 @@ function Nav() {
           <Link className="transition hover:text-green-600" href="/Recipe">
             Recipes
           </Link>
+          <Link className="transition hover:text-green-600"  href="/Favarites">
+          Favarites
+          </Link>
           <Link className="transition hover:text-green-600" href="/About">
             About
           </Link>

@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import type { Category } from "@/type/type";
 import type { Recipe } from "@/type/type";
+
  export const getRecipeById = async (id: string) => {
   try {
   const response = await fetch(
@@ -9,6 +10,7 @@ import type { Recipe } from "@/type/type";
 );
 
 const result = await response.json();
+console.log(result)
 
 return result.meals?.[0] ?? null;
   } catch (error) {

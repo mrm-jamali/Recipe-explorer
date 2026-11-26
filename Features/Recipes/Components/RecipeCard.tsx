@@ -13,7 +13,7 @@ const addFavarite = useFavariteStore(
 );
 const removeFavarite=useFavariteStore((state)=>state.removeFavarite)
 const favarite=useFavariteStore((state)=>state.favarite)
-const isFavarite=favarite.includes(recipe.idMeal)
+const isFavarite=favarite.some(item=>item.idMeal===recipe.idMeal)
 
 
 const FavariteHandler=()=>{
@@ -22,8 +22,8 @@ removeFavarite(recipe.idMeal)
 console.log("recipe.idMeal",recipe.idMeal)
   }
   else {
-addFavarite(recipe.idMeal)
-console.log("recipe.idMeal",recipe.idMeal)
+addFavarite(recipe)
+console.log("recipe......:",recipe)
 
   }
 }
@@ -82,6 +82,11 @@ console.log("recipe.idMeal",recipe.idMeal)
             <span>4.8</span>
           </div>
 
+
+          <div>
+            
+          </div>
+
         </div>
       </div>
     </div>
@@ -89,3 +94,6 @@ console.log("recipe.idMeal",recipe.idMeal)
 }
 
 export default RecipeCard;
+
+
+
